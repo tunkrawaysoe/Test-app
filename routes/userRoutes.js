@@ -1,5 +1,5 @@
 import express from "express";
-import { getUser,getUserFriends } from "../controllers/userController.js";
+import { getUser,getUserFriends,addRemoveFriend} from "../controllers/userController.js";
 
 const Router = express.Router();
 
@@ -7,6 +7,8 @@ const Router = express.Router();
 Router.get('/:id',getUser);
 Router.get('/:id/friends',getUserFriends)
 
+//Update
+Router.patch('/:id/:friendId',addRemoveFriend)
 
 export default Router;
 
