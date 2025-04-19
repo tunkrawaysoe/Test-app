@@ -1,10 +1,12 @@
 import express from "express";
-import { getUser } from "../controllers/userController.js";
+import { getUser,getUserFriends } from "../controllers/userController.js";
 
 const Router = express.Router();
 
-//Getting user 
+//Getting user and userFriends
 Router.get('/:id',getUser);
+Router.get('/:id/friends',getUserFriends)
+
 
 export default Router;
 
