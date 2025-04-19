@@ -44,7 +44,7 @@ export const getUserFriends = async (req,res) => {
 export const addRemoveFriend = async (req, res) => {
   try {
     const { id, friendId } = req.params;
-    console.log(`${id} and ${friendId}`)
+    console.log(`${id} and ${friendId}`);
 
     if (id === friendId) {
       return res.status(400).json({ message: "You can't add or remove yourself as a friend." });
@@ -60,8 +60,8 @@ export const addRemoveFriend = async (req, res) => {
     const isFriend = user.friends.includes(friendId);
 
     if (isFriend) {
-      user.friends = user.friends.filter(fid => fid !== friendId);
-      friend.friends = friend.friends.filter(fid => fid !== id);
+      user.friends = user.friends.filter(fid => fid.toString() !== friendId);
+      friend.friends = friend.friends.filter(fid => fid.toString() !== id);
     } else {
       user.friends.push(friendId);
       friend.friends.push(id);
@@ -74,16 +74,16 @@ export const addRemoveFriend = async (req, res) => {
       user.friends.map((id) => User.findById(id))
     );
 
-    const formattedFriends = friends.map(
-      ({ _id, firstName, lastName, occupation, location, picturePath }) => ({
+    const formattedFriends = friends
+      .filter(friend => friend !== null)
+      .map(({ _id, firstName, lastName, occupation, location, picturePath }) => ({
         _id,
         firstName,
         lastName,
         occupation,
         location,
         picturePath,
-      })
-    );
+      }));
 
     res.status(200).json(formattedFriends);
   } catch (err) {
@@ -91,6 +91,7 @@ export const addRemoveFriend = async (req, res) => {
     res.status(500).json({ message: 'Something went wrong.', error: err.message });
   }
 };
+
 
 
   
