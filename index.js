@@ -7,7 +7,8 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
-import userRoutes from "./routes/authroutes.js"; 
+import authRoutes from "./routes/authroutes.js"; 
+import userRoutes from './routes/userRoutes.js'
 
 //CONFIGURATIONS
 const __fileName = fileURLToPath(import.meta.url)
@@ -38,7 +39,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 //Routes
-app.use('/auth',userRoutes);
+app.use('/auth',authRoutes);
+app.use('/users',userRoutes);
 
 // Connect to MongoDB
 const PORT = process.env.PORT || 4000
