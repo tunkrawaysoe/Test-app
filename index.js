@@ -7,7 +7,7 @@ import multer from "multer";
 import path from "path";
 import { fileURLToPath } from "url";
 import morgan from "morgan";
-import userRoutes from "./routes/userRoutes.js"; 
+import userRoutes from "./routes/authroutes.js"; 
 
 //CONFIGURATIONS
 const __fileName = fileURLToPath(import.meta.url)
@@ -23,7 +23,7 @@ app.use(helmet.crossOriginResourcePolicy({policy:"cross-origin"}));
 app.use(morgan("common"));
 app.use(cors());
 app.use('/assets',express.static(path.join(__dirName,'public/assets')));
-app.use('/auth',userRoutes);
+
 
 // Storage configuration
 const storage = multer.diskStorage({
@@ -36,6 +36,9 @@ const storage = multer.diskStorage({
   });
 
 const upload = multer({ storage });
+
+//Routes
+app.use('/auth',userRoutes);
 
 // Connect to MongoDB
 const PORT = process.env.PORT || 4000

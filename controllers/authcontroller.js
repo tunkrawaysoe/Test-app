@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import User from "../models/User.js"; // Import your User model
 import bcrypt from "bcryptjs"; // Corrected the typo
+import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
   try {
@@ -54,3 +55,45 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: "Error registering user." });
   }
 };
+
+//Login user
+export const loginUser = async (req,res) => {
+ const {email,password} = req.body;
+  try {
+     // Check if user exists
+     const user = await User.findOne({ email });
+     if (!user) {
+       return res.status(404).json({ message: "User not found" });
+     }
+ 
+     // Check password
+     const isMatch = await bcrypt.compare(password, user.password);
+     if (!isMatch) {
+       return res.status(400).json({ message: "Invalid credentials" });
+     }
+
+    // Create JWT
+    const token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    
+    // After verifying the password and generating the token
+    const userData = user.toObject();
+    delete userData.password;
+
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: userData,
+    });
+ 
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+    
+  }
+  
+}
