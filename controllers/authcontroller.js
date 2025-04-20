@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import User from "../models/User.js"; // Import your User model
-import bcrypt from "bcryptjs"; // Corrected the typo
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const registerUser = async (req, res) => {
@@ -25,7 +25,7 @@ export const registerUser = async (req, res) => {
     }
 
     // Salt and hash the password
-    const salt = await bcrypt.genSalt(10); // 10 rounds of salting (you can adjust this)
+    const salt = await bcrypt.genSalt(10); // 
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create a new user
