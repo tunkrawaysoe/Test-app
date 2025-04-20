@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 import morgan from "morgan";
 import authRoutes from "./routes/authroutes.js"; 
 import userRoutes from './routes/userRoutes.js'
+import postRoutes from './routes/postRoutes.js'
 
 //CONFIGURATIONS
 const __fileName = fileURLToPath(import.meta.url)
@@ -41,6 +42,7 @@ const upload = multer({ storage });
 //Routes
 app.use('/auth',authRoutes);
 app.use('/users',userRoutes);
+app.use('/posts',postRoutes);
 
 // Connect to MongoDB
 const PORT = process.env.PORT || 4000

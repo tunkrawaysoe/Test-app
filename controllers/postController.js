@@ -49,10 +49,15 @@ export const getUserPosts = async (req, res) => {
       res.status(500).json({ message: 'Failed to fetch user posts', error: error.message });
     }
   };
-  export const likePost = async (req, res) => {
+export const likePost = async (req, res) => {
     try {
       const { postId } = req.params;
       const { userId } = req.body;
+
+      
+      if (!userId) {
+        return res.status(400).json({ message: 'userId is required in the request body' });
+      }
   
       // Find the post by ID
       const post = await Post.findById(postId);
