@@ -1,6 +1,7 @@
 import React from 'react';
 import NavBar from '../navbar/index';
 import { Box, Typography, useMediaQuery,useTheme } from '@mui/material';
+import Form from '../components/Form'
 const HomePage = () => {
   const theme = useTheme();
   const isNonMobileScreen = useMediaQuery('(min-width:1000px)');
@@ -27,6 +28,7 @@ const HomePage = () => {
           Welcome to Social Hub
         </Typography>
         {/* You can place forms, feed, or user info here */}
+        <Form/>
       </Box>
     </Box>
   );
