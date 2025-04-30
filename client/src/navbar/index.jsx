@@ -27,7 +27,7 @@ const NavBar = () => {
         <Typography
           fontWeight='bold'
           fontSize='clamp(1rem, 2rem, 2.25rem)'
-          color='primary'
+          color='secondary'
           onClick={() => navigate('/home')}
           sx={{
             ":hover": {
@@ -36,12 +36,12 @@ const NavBar = () => {
             },
           }}
         >
-          Socialpedia
+          Social Hub
         </Typography>
 
         {/* Search Bar */}
         {isNonMobileScreen && (
-          <FlexBetween backgroundColor={neutralLight} borderRadius='9px' gap='0.1rem 1.5rem' padding='0.1rem 1rem'>
+          <FlexBetween backgroundColor={neutralLight} borderRadius='9px' gap='0.1rem 3rem' padding='0.1rem 1rem'>
             <InputBase placeholder='Search...' />
             <IconButton>
               <Search />
