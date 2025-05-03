@@ -2,12 +2,14 @@ import React from 'react';
 import NavBar from '../navbar/index';
 import { Box, useMediaQuery } from '@mui/material';
 import UserWidget from './Widgets/UserWidget';
-import { Block } from '@mui/icons-material';
 import { useSelector } from 'react-redux';
 import PostWidget from './Widgets/PostWidget';
+import MyPostWidget from './Widgets/MyPostWidget';
+
 
 const HomePage = () => {
-  const isNonMobileScreens = useMediaQuery('(min-width : 1000px)')
+  const isNonMobileScreens = useMediaQuery('(min-width : 1000px)');
+  
   return (    
     <Box>
       <NavBar />
@@ -17,16 +19,22 @@ const HomePage = () => {
         display={isNonMobileScreens ? 'flex' : 'block'}
         justifyContent='space-between'
         gap='2rem'
-
       >
-        <Box flexBasis={isNonMobileScreens ? '26%' :  undefined}>
+        <Box flexBasis={isNonMobileScreens ? '26%' : undefined}>
           <UserWidget/> 
         </Box>
-        <Box flexBasis={isNonMobileScreens ? '42%' :  undefined}>
+        
+        <Box flexBasis={isNonMobileScreens ? '42%' : undefined}>
+          <MyPostWidget />
           <PostWidget/> 
         </Box>
         
+        {isNonMobileScreens && (
+          <Box flexBasis='26%'>
+            {/* Right sidebar content goes here */}
         
+          </Box>
+        )}
       </Box>
     </Box>
   );
