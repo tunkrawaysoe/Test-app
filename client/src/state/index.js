@@ -29,9 +29,9 @@ const authSlice = createSlice({
         console.log("User friends not exist");
       }
     },
-    setPosts: (state, action) => {
-      state.posts = action.payload.posts;
-    },
+      setPosts: (state, action) => {
+        state.posts = action.payload.posts;
+      },
     setPost: (state, action) => {
       const updatedPosts = state.posts.map((post) =>
         post._id === action.payload.post_id ? action.payload.post : post

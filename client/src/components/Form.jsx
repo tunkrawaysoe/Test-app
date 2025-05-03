@@ -81,6 +81,7 @@ const Form = () => {
       setPageType("login");
     }
   };
+  
 
   const login = async (values, onSubmitProps) => {
     const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
@@ -95,6 +96,7 @@ const Form = () => {
       navigate("/home");
     }
   };
+
 
   const handleFormSubmit = async (values, onSubmitProps) => {
     if (isLogin) await login(values, onSubmitProps);
