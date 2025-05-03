@@ -1,5 +1,5 @@
 import React, { use } from 'react'
-import { PhotoCameraBack,AttachFile,MicNone,GifBoxOutlined,MoreHorizOutlined} from '@mui/icons-material';
+import { PhotoCameraBack,AttachFile,MicNone,GifBoxOutlined,MoreHorizOutlined,EditOutlined, DeleteOutline} from '@mui/icons-material';
 import { Box,Typography,Button,Divider,InputBase,IconButton,useMediaQuery, useTheme } from '@mui/material';
 import Dropzone from 'react-dropzone';
 import FlexBetween from '../../components/FlexBetween';
@@ -10,7 +10,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setPost, setPosts } from '../../state';
 
 const MyPostWidget = () => {
-    const [isImage,setIsImage] = useState('false')
+    const [isImage,setIsImage] = useState(false)
     const [image,setImage] = useState(null)
     const [post,setPost] = useState('')
     const {palette} = useTheme();
@@ -41,7 +41,119 @@ const MyPostWidget = () => {
     }
     
   return (
-    <div>MyPostWidget</div>
+    <WidgetWrapper mt={isNonMobileScreens ? '' : '1rem'}>
+      <FlexBetween gap='1.5rem'>
+        <UserImage></UserImage>
+        <InputBase 
+          placeholder="What's on your mind"
+          onChange={(e)=>setPost(e.target.value)}
+          value={post}
+          sx={{
+            width:'100%',
+            backgroundColor:palette.neutral.light,
+            borderRadius : '2rem',
+            padding :'1rem 2rem'
+
+          }}
+        />
+      </FlexBetween>
+      <Divider sx={{margin : '1rem 0'}}/>
+      {isImage && (
+        <Box 
+        border={`1px solid ${medium}`}
+        borderRadius='5px'
+        mt='1rem'
+        p='1rem'
+        >
+          <Dropzone
+            acceptedFiles=".jpg,.jpeg,.png"
+            multiple={false}
+            onDrop={(acceptedFiles) => setImage(acceptedFiles[0])}
+          >
+            {({getRootProps, getInputProps})=>(
+              <FlexBetween>
+                <Box
+                 {...getRootProps()}
+                  border={`2px dashed ${palette.primary.main}`}
+                  p="1rem"
+                  width="100%"
+                  sx={{ "&:hover": { cursor: "pointer" } }}
+                >
+                  <input {...getInputProps()} />
+                  {!image ? (
+                    <Typography>Add image here</Typography>
+                  )
+                  :
+                  (
+                    <FlexBetween>
+                      <Typography>{image.name}</Typography>
+                      <EditOutlined/>
+                    </FlexBetween>
+                  )
+                  }
+                </Box>
+                {image && (
+                  <IconButton onClick={()=>setImage(null)}
+                  sx={{width:'10%'}}>
+                    <DeleteOutline/>
+                  </IconButton>
+                )}
+              </FlexBetween>
+                
+              )
+            }
+
+          </Dropzone>
+          
+        </Box>
+      )}
+      {isImage && (
+        <Divider sx={{margin : '1rem 0'}}/>
+
+      )}
+      
+      <FlexBetween>
+        <FlexBetween gap='0.25rem' onClick={()=>setIsImage(!isImage)}>
+          <PhotoCameraBack/>
+          <Typography>image</Typography>
+        </FlexBetween>
+        
+        {isNonMobileScreens ? (
+            <>
+              <FlexBetween gap='0.25rem' onClick={()=>setIsImage(!isImage)}>
+                <GifBoxOutlined/>
+                <Typography>Clip</Typography>
+              </FlexBetween>
+              <FlexBetween gap="0.25rem">
+                <AttachFile />
+                <Typography>Attachment</Typography>
+              </FlexBetween>
+              <FlexBetween gap="0.25rem">
+                <MicNone />
+                <Typography>Audio</Typography>
+              </FlexBetween>
+            </>
+          ):
+          (
+            <FlexBetween gap="0.25rem">
+              <MoreHorizOutlined sx={{ color: mediumMain }} />
+            </FlexBetween>
+          )}
+
+        <Button 
+        disabled={!post}
+        onClick={handlePost}
+        sx={{
+          color: palette.background.alt,
+          backgroundColor: palette.primary.main,
+          borderRadius: "1rem",
+        }}>
+          Post
+        </Button>
+       
+
+      </FlexBetween>
+    </WidgetWrapper>
   )
 }
 
