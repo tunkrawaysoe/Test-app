@@ -1,42 +1,52 @@
-// color design tokens export
+// theme.js
 export const colorTokens = {
   grey: {
-    0: "#F8F9FA", // Very light gray for backgrounds
-    10: "#F1F3F5", 
-    50: "#DEE2E6", 
-    100: "#CED4DA", 
-    200: "#ADB5BD", 
-    300: "#868E96", 
-    400: "#495057", // Darker grey for neutral text
-    500: "#343A40", 
-    600: "#212529", 
-    700: "#121416", 
-    800: "#0A0B0D", 
-    900: "#050506", // Almost black for text contrast
-    1000: "#000000", 
+    0: "#FFFFFF",
+    10: "#F9FAFB",
+    50: "#F0F2F5",
+    100: "#E0E0E0",
+    200: "#C2C2C2",
+    300: "#A3A3A3",
+    400: "#858585",
+    500: "#666666",
+    600: "#4D4D4D",
+    700: "#333333",
+    800: "#1A1A1A",
+    900: "#0A0A0A",
+    1000: "#000000",
   },
   primary: {
-    50: "#E3F2FD", // Soft blue for light backgrounds
-    100: "#BBDEFB", 
-    200: "#90CAF9", 
-    300: "#64B5F6", 
-    400: "#42A5F5", 
-    500: "#2196F3", // Bold blue for primary action buttons
-    600: "#1E88E5", 
-    700: "#1976D2", 
-    800: "#1565C0", 
-    900: "#0D47A1", // Deep blue for focus elements
+    50: "#EAF0FF",
+    100: "#C4D9FF",
+    200: "#9EC2FF",
+    300: "#78ABFF",
+    400: "#5294FF",
+    500: "#2C7DFF",
+    600: "#225FCC",
+    700: "#194299",
+    800: "#0F2466",
+    900: "#061733",
+  },
+  accent: {
+    100: "#D3F6CF",
+    200: "#A7ED9F",
+    300: "#7BE36F",
+    400: "#4FDA3F",
+    500: "#23D10F",
+    600: "#1BA60C",
+    700: "#137A09",
+    800: "#0C4F06",
+    900: "#042303",
   },
 };
 
-// mui theme settings
 export const themeSettings = (mode) => {
   return {
     palette: {
       mode: mode,
       ...(mode === "dark"
         ? {
-            // palette values for dark mode
+            // Dark mode palette
             primary: {
               dark: colorTokens.primary[200],
               main: colorTokens.primary[500],
@@ -47,60 +57,48 @@ export const themeSettings = (mode) => {
               main: colorTokens.grey[200],
               mediumMain: colorTokens.grey[300],
               medium: colorTokens.grey[400],
-              light: colorTokens.grey[700],
+              light: colorTokens.grey[600],
             },
             background: {
               default: colorTokens.grey[900],
               alt: colorTokens.grey[800],
             },
+            accent: {
+              main: colorTokens.accent[400],
+            },
           }
         : {
-            // palette values for light mode
+            // Light mode palette with stronger contrast
             primary: {
               dark: colorTokens.primary[700],
               main: colorTokens.primary[500],
-              light: colorTokens.primary[50],
+              light: colorTokens.primary[100],
             },
             neutral: {
-              dark: colorTokens.grey[700],
-              main: colorTokens.grey[500],
-              mediumMain: colorTokens.grey[400],
-              medium: colorTokens.grey[300],
-              light: colorTokens.grey[50],
+              dark: colorTokens.grey[800],
+              main: colorTokens.grey[700],
+              mediumMain: colorTokens.grey[600],
+              medium: colorTokens.grey[500],
+              light: colorTokens.grey[300],
             },
             background: {
-              default: colorTokens.grey[10],
+              default: colorTokens.grey[200], // very light gray instead of pure white
               alt: colorTokens.grey[0],
+            },
+            accent: {
+              main: colorTokens.accent[500],
             },
           }),
     },
     typography: {
       fontFamily: ["Inter", "sans-serif"].join(","),
-      fontSize: 14,
-      h1: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 36,
-      },
-      h2: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 28,
-      },
-      h3: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 22,
-      },
-      h4: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 18,
-      },
-      h5: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 16,
-      },
-      h6: {
-        fontFamily: ["Inter", "sans-serif"].join(","),
-        fontSize: 14,
-      },
+      fontSize: 13,
+      h1: { fontFamily: "Inter", fontSize: 42 },
+      h2: { fontFamily: "Inter", fontSize: 34 },
+      h3: { fontFamily: "Inter", fontSize: 26 },
+      h4: { fontFamily: "Inter", fontSize: 22 },
+      h5: { fontFamily: "Inter", fontSize: 18 },
+      h6: { fontFamily: "Inter", fontSize: 15 },
     },
   };
 };
