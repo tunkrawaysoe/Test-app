@@ -15,7 +15,7 @@ import UserImage from './UserImage';
 import { useNavigate } from 'react-router-dom';
 import { setFriends } from '../state';
 
-const Friend = ({ friendId ,name,subtitle}) => {
+const Friend = ({ friendId ,name,location}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -74,7 +74,7 @@ const Friend = ({ friendId ,name,subtitle}) => {
                 {name ? name : "Guest"}
             </Typography>
             <Typography color={medium} fontSize="0.75rem">
-            {subtitle ? subtitle : ''}
+            {location ? location : ''}
 
             </Typography>
         </Box>
