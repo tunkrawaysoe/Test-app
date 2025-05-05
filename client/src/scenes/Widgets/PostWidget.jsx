@@ -5,7 +5,7 @@ import FlexBetween from '../../components/FlexBetween'
 import Friend from '../../components/Friend'
 import { setPost } from '../../state'
 import { useDispatch, useSelector } from 'react-redux'
-import { FavoriteOutlined ,ShareOutlined,ChatBubbleOutline,FavoriteBorderOutlined, KingBed, WhatsApp} from '@mui/icons-material'
+import { FavoriteOutlined ,ShareOutlined,ChatBubbleOutline,FavoriteBorderOutlined,} from '@mui/icons-material'
 const PostWidget = ({
     postId,
     postUserId,
