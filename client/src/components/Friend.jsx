@@ -71,7 +71,7 @@ const Friend = ({ friendId ,name,location}) => {
                 cursor: "pointer",
               },
             }}>
-                {name ? name : "Guest"}
+                {name ? name : "Guest"} 
             </Typography>
             <Typography color={medium} fontSize="0.75rem">
             {location ? location : ''}

@@ -1,9 +1,9 @@
 import React from 'react'
-import WidgetWrapper from '../../components/WidgetWrapper'
+import WidgetWrapper from '../components/WidgetWrapper'
 
 const ProfilePage = () => {
   return (
-    
+    <></>
   )
 }
 
