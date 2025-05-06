@@ -26,19 +26,6 @@ app.use(morgan("common"));
 app.use(cors());
 app.use('/assets',express.static(path.join(__dirName,'public/assets')));
 
-
-// Storage configuration
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'public/assets'); // directory to store uploaded files
-    },
-    filename: function (req, file, cb) {
-      cb(null, file.originalname);
-    }
-  });
-
-const upload = multer({ storage });
-
 //Routes
 app.use('/auth',authRoutes);
 app.use('/users',userRoutes);

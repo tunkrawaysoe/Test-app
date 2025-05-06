@@ -10,6 +10,7 @@ import { useDispatch,useSelector } from 'react-redux';
 import { setPost, setPosts } from '../../state';
 
 const MyPostWidget = ({userId,picturePath}) => {
+  
     const [isImage,setIsImage] = useState(false)
     const [image,setImage] = useState(null)
     const [post,setPost] = useState('')
@@ -43,7 +44,7 @@ const MyPostWidget = ({userId,picturePath}) => {
   return (
     <WidgetWrapper mt={isNonMobileScreens ? '' : '1rem'}>
       <FlexBetween gap='1.5rem'>
-        <UserImage></UserImage>
+        <UserImage image={picturePath}/>
         <InputBase 
           placeholder="What's on your mind"
           onChange={(e)=>setPost(e.target.value)}

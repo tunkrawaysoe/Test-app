@@ -214,6 +214,7 @@ const Form = () => {
               error={Boolean(touched.email) && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               sx={{ gridColumn: "span 4" }}
+              autoComplete={isRegister ? "email" : "username"} 
             />
             <TextField
               label="Password"
@@ -225,7 +226,7 @@ const Form = () => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
-               autoComplete="current-password"
+              autoComplete="current-password"
             />
           </Box>
 

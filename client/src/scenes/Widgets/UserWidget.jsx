@@ -73,9 +73,9 @@ const UserWidget = ({ userId, picturePath }) => {
   return (
     <WidgetWrapper>
       {/* First Row */}
-      <FlexBetween gap="1rem">
+      <FlexBetween gap="1rem" pb="1.1rem">
         <FlexBetween gap="1rem">
-          <UserImage imgsrc={picturePath || '../../src/post8.jpeg'} />
+          <UserImage image= {picturePath}  />
           <Box>
             <Typography fontWeight="500" variant="h6" color={dark}>
               {firstName} {lastName}
