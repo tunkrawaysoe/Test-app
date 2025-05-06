@@ -12,17 +12,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import FlexBetween from './FlexBetween';
 import UserImage from './UserImage';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import { setFriends } from '../state';
 
-const Friend = ({ friendId ,name,location}) => {
+
+const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user);
+  const { _id } = useSelector((state) => state.user);
+  const user = useSelector((state)=> state.user)
   const token = useSelector((state) => state.token);
-  const _id = user?._id;
-  const friends = user?.friends || [];
+  const friends = useSelector((state) => state.user?.friends || []);
+  console.log(user)
 
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
@@ -33,64 +34,60 @@ const Friend = ({ friendId ,name,location}) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
 
   const patchFriend = async () => {
-    if (!_id || !token) return;
-
-    try {
-      const response = await fetch(`http://localhost:3000/users/${_id}/${friendId}`, {
-        method: 'PATCH',
+    const response = await fetch(
+      `http://localhost:3001/users/${_id}/${friendId}`,
+      {
+        method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-      });
-
-      if (!response.ok) {
-        console.error('Failed to update friend list');
-        return;
       }
-
-      const data = await response.json();
-      dispatch(setFriends({ friends: data }));
-    } catch (err) {
-      console.error('Error updating friend:', err);
-    }
+    );
+    const data = await response.json();
+    dispatch(setFriends({ friends: data }));
   };
 
-
   return (
+    
     <FlexBetween>
-      <FlexBetween gap='1rem'>
-        <UserImage/>
-        <Box onClick = {()=> {
-            navigate(`profile/${friendId}`)
-            navigate(0)
-        }}>
-            <Typography color={main} variant='h5' fontWeight={500} sx={{
+
+      <FlexBetween gap="1rem">
+        <UserImage image={userPicturePath} size="55px" />
+        <Box
+          onClick={() => {
+            navigate(`/profile/${friendId}`);
+            navigate(0);
+          }}
+        >
+          <Typography
+            color={main}
+            variant="h5"
+            fontWeight="500"
+            sx={{
               "&:hover": {
                 color: palette.primary.light,
                 cursor: "pointer",
               },
-            }}>
-                {name ? name : "Guest"} 
-            </Typography>
-            <Typography color={medium} fontSize="0.75rem">
-            {location ? location : ''}
-
-            </Typography>
+            }}
+          >
+            {name}
+          </Typography>
+          <Typography color={medium} fontSize="0.75rem">
+            {subtitle}
+          </Typography>
         </Box>
-        
       </FlexBetween>
-      <IconButton onClick={()=>patchFriend()} sx={{ backgroundColor: primaryLight, p: "0.4rem" }}>
+      <IconButton
+        onClick={() => patchFriend()}
+        sx={{ backgroundColor: primaryLight, p: "0.6rem" }}
+      >
         {isFriend ? (
-            <PersonRemoveOutlined sx={{ color: primaryDark }}/>
-        )
-        :
-        (
-            <PersonAddOutlined sx={{ color: primaryDark }}/>
-        )
-    }
+          <PersonRemoveOutlined sx={{ color: primaryDark }} />
+        ) : (
+          <PersonAddOutlined sx={{ color: primaryDark }} />
+        )}
       </IconButton>
-
     </FlexBetween>
   );
 };

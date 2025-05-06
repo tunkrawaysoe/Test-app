@@ -9,13 +9,13 @@ import { useState } from 'react';
 import { useDispatch,useSelector } from 'react-redux';
 import { setPost, setPosts } from '../../state';
 
-const MyPostWidget = () => {
+const MyPostWidget = ({userId,picturePath}) => {
     const [isImage,setIsImage] = useState(false)
     const [image,setImage] = useState(null)
     const [post,setPost] = useState('')
     const {palette} = useTheme();
-    //const {_id} = useSelector((state)=>state.user);
-    //const {token} = useSelector((state)=>state.token)
+    
+    const {token} = useSelector((state)=>state.token)
     const isNonMobileScreens = useMediaQuery('(min-width:1000px)')
     const dispatch = useDispatch();
     const mediumMain  = palette.neutral.mediumMain;
@@ -23,7 +23,7 @@ const MyPostWidget = () => {
 
     const handlePost = async () => {
         const formData = new FormData();
-        formData.append('userId',_id);  
+        formData.append('userId',userId);  
         formData.append('description',post);
         if(image){
             formData.append('picture',image);

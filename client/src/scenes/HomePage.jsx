@@ -11,6 +11,7 @@ import FriendListWidget from './Widgets/FriendListWidget';
 
 const HomePage = () => {
   const isNonMobileScreens = useMediaQuery('(min-width : 1000px)');
+  const {_id,picturePath} = useSelector((state)=>state.user)
   
   return (    
     <Box>
@@ -23,7 +24,7 @@ const HomePage = () => {
         gap='2rem'
       >
         <Box flexBasis={isNonMobileScreens ? '26%' : undefined}>
-          <UserWidget/> 
+          <UserWidget userId={_id} picturePath={picturePath}/> 
         </Box>
         
         <Box flexBasis={isNonMobileScreens ? '42%' : undefined}>
@@ -35,7 +36,7 @@ const HomePage = () => {
           <Box flexBasis='26%'>
             {/* Right sidebar content goes here */}
             <AdvertWidget/>
-            <FriendListWidget/>
+            <FriendListWidget userId={_id}/>
           </Box>
 
         )}

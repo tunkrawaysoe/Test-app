@@ -70,7 +70,7 @@ const Form = () => {
     }
     formData.append("picturePath", values.picture.name);
 
-    const savedUserResponse = await fetch("http://localhost:3001/auth/register", {
+    const savedUserResponse = await fetch("http://localhost:3000/auth/register", {
       method: "POST",
       body: formData,
     });
@@ -84,12 +84,13 @@ const Form = () => {
   
 
   const login = async (values, onSubmitProps) => {
-    const loggedInResponse = await fetch("http://localhost:3001/auth/login", {
+    const loggedInResponse = await fetch("http://localhost:3000/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(values),
     });
     const loggedIn = await loggedInResponse.json();
+    console.log(loggedIn)
     onSubmitProps.resetForm();
     if (loggedIn) {
       dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
@@ -224,6 +225,7 @@ const Form = () => {
               error={Boolean(touched.password) && Boolean(errors.password)}
               helperText={touched.password && errors.password}
               sx={{ gridColumn: "span 4" }}
+               autoComplete="current-password"
             />
           </Box>
 
