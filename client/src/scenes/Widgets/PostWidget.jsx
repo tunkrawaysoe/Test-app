@@ -29,10 +29,7 @@ const PostWidget = ({
             const likeCount = Object.keys(likes || {}).length;
             const countComment = comments?.length;
             
-
-
-
-              const patchLike = async () => {
+            const patchLike = async () => {
                 const response = await fetch(`http://localhost:3000/posts/${postId}/like`,{
                   method : 'PATCH',
                   headers: {
@@ -47,9 +44,9 @@ const PostWidget = ({
             }
 
             return (
-            <WidgetWrapper>
-              <Friend friendId = {postUserId} name={name} location={location}/>
-              <Typography color={main} sx={{mt:"1rem"}}>
+            <WidgetWrapper m='2rem 0'>
+              <Friend friendId = {postUserId} name={name} subtitle={location} userPicturePath={userPicturePath}/>
+              <Typography color={main} m='2rem 0'>
                 {description}
               </Typography>
               {picturePath && (

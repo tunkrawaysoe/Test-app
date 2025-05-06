@@ -23,7 +23,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const user = useSelector((state)=> state.user)
   const token = useSelector((state) => state.token);
   const friends = useSelector((state) => state.user?.friends || []);
-  console.log(user)
+  console.log(userPicturePath)
 
   const { palette } = useTheme();
   const primaryLight = palette.primary.light;
