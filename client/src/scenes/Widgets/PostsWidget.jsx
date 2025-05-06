@@ -1,76 +1,97 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../../state';
 import PostWidget from './PostWidget';
 
-const PostsWidget = ({userId,isProfile=false}) => {
+const PostsWidget = ({ userId, isProfile = false }) => {
   const dispatch = useDispatch();
-  const posts = useSelector((state)=>state.posts);
-  const token = useSelector((state)=>state.token);
+  const posts = useSelector((state) => state.posts);
+  const token = useSelector((state) => state.token);
+  const [loading, setLoading] = useState(true);
 
   const getPosts = async () => {
-    const response = await fetch('http://localhost:3000/posts/',{
-      method : "GET" ,
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const posts = await response.json();
-    dispatch(setPosts({posts})) 
-    console.log(posts)
-  }
+    try {
+      const response = await fetch('http://localhost:3000/posts/', {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!response.ok) throw new Error('Failed to fetch posts');
+
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+    }
+  };
 
   const getUserPost = async () => {
-    const response = await fetch(`http://localhost:3000/posts/${userId}/posts`,{
-      method : 'GET',
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    const posts = await response.json();
-    dispatch(setPosts({posts}))
-    
-  }
+    try {
+      const response = await fetch(`http://localhost:3000/posts/${userId}/posts`, {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-  useEffect(()=>{
-   if(isProfile){
-    getUserPost();
-   }else{
-    getPosts();
-   }
+      if (!response.ok) throw new Error('Failed to fetch user posts');
 
-  },[])
+      const data = await response.json();
+      dispatch(setPosts({ posts: data }));
+    } catch (error) {
+      console.error('Error fetching user posts:', error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      if (isProfile) {
+        await getUserPost();
+      } else {
+        await getPosts();
+      }
+      setLoading(false);
+    };
+
+    fetchData();
+  }, [isProfile, userId, token]);
+
+  if (loading) return <p>Loading posts...</p>;
 
   return (
     <>
-    {
-      posts.map(({
-        _id,
-        userId,
-        firstName,
-        lastName,
-        description,
-        location,
-        picturePath,
-        userPicturePath,
-        likes,
-        comments
-       })=>(
-        <PostWidget 
-          key={_id}
-          postId={_id}
-          postUserId = {userId}
-          name = {`${firstName} ${lastName}`}
-          description={description}
-          location={location}
-          picturePath={picturePath}
-          userPicturePath={userPicturePath}
-          likes={likes}
-          comments={comments}
-
-          />
-
-      ))
-    }
+      {posts?.length > 0 ? (
+        posts.map(
+          ({
+            _id,
+            userId,
+            firstName,
+            lastName,
+            description,
+            location,
+            picturePath,
+            userPicturePath,
+            likes,
+            comments,
+          }) => (
+            <PostWidget
+              key={_id}
+              postId={_id}
+              postUserId={userId}
+              name={`${firstName} ${lastName}`}
+              description={description}
+              location={location}
+              picturePath={picturePath}
+              userPicturePath={userPicturePath}
+              likes={likes}
+              comments={comments}
+            />
+          )
+        )
+      ) : (
+        <p>No posts available.</p>
+      )}
     </>
-    
-  )
-}
+  );
+};
 
-export default PostsWidget
+export default PostsWidget;

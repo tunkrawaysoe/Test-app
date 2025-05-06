@@ -4,6 +4,7 @@ import User from '../models/User.js';
 export const createPost = async (req, res) => {
   try {
     const { userId, description, picturePath } = req.body;
+   
     const user = await User.findById(userId);
 
     const newPost = new Post({
@@ -21,7 +22,7 @@ export const createPost = async (req, res) => {
     await newPost.save();
 
     // Optionally return all posts after creating the new one
-    const posts = await Post.find(); 
+    const posts = await Post.find().sort({ createdAt: -1 }); // newest first; 
     res.status(201).json(posts);
   } catch (error) {
     console.error(error);
