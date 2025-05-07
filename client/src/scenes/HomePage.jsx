@@ -5,7 +5,6 @@ import UserWidget from './Widgets/UserWidget';
 import { useSelector } from 'react-redux';
 import PostsWidget from './Widgets/PostsWidget';
 import MyPostWidget from './Widgets/MyPostWidget';
-import AdvertWidget from './Widgets/AdvertWidget';
 import FriendListWidget from './Widgets/FriendListWidget';
 
 
@@ -39,7 +38,6 @@ const HomePage = () => {
         {isNonMobileScreens && (
           <Box flexBasis='26%'>
             {/* Right sidebar content goes here */}
-            <AdvertWidget/>
             <FriendListWidget userId={_id}/>
           </Box>
 

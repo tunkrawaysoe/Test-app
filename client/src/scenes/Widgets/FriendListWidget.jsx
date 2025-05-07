@@ -27,7 +27,7 @@ const FriendListWidget = ({ userId }) => {
   }, []); // consider adding [userId] as a dependency if this can change
 
   return (
-    <WidgetWrapper m="1rem 0">
+    <WidgetWrapper >
       <Typography variant="h6" sx={{ mb: '1rem' }}>
         Friend List
       </Typography>

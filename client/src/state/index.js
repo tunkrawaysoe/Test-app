@@ -34,7 +34,7 @@ const authSlice = createSlice({
       },
      setPost: (state, action) => {
       const updatedPosts = state.posts.map((post) =>
-        post._id === action.payload.post_id ? action.payload.post : post
+        post._id === action.payload.post._id ? action.payload.post : post
       );
       state.posts = updatedPosts;
     },
