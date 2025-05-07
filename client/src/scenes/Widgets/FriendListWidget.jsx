@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import Friend from '../../components/Friend';
-import { Box, useTheme, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { setFriends } from '../../state';
 import { useDispatch, useSelector } from 'react-redux';
 
 const FriendListWidget = ({ userId }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
-  const friends = useSelector((state) => state.user?.friends || []);
+  const {friends} = useSelector((state)=>state.user)
+  
+  
 
   const getUserFriends = async () => {
     const response = await fetch(
@@ -25,9 +27,10 @@ const FriendListWidget = ({ userId }) => {
   useEffect(() => {
     getUserFriends();
   }, []); // consider adding [userId] as a dependency if this can change
+  console.log(userId)
 
   return (
-    <WidgetWrapper >
+    <WidgetWrapper  >
       <Typography variant="h6" sx={{ mb: '1rem' }}>
         Friend List
       </Typography>

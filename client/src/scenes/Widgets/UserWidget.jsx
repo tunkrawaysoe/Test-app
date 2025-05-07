@@ -12,6 +12,7 @@ import WidgetWrapper from '../../components/WidgetWrapper';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
   const { palette } = useTheme();
@@ -71,13 +72,18 @@ const UserWidget = ({ userId, picturePath }) => {
   } = user;
 
   return (
-    <WidgetWrapper>
+    <WidgetWrapper mb='1rem'>
       {/* First Row */}
       <FlexBetween gap="1rem" pb="1.1rem">
-        <FlexBetween gap="1rem">
+        <FlexBetween gap="1rem" onClick={()=>navigate(`/profile/${userId}`)}>
           <UserImage image= {picturePath}  />
           <Box>
-            <Typography fontWeight="500" variant="h6" color={dark}>
+            <Typography fontWeight="500" variant="h6" color={dark} sx={{
+                "&:hover": {
+                  color: palette.primary.light,
+                  cursor: "pointer",
+                },
+              }} >
               {firstName} {lastName}
             </Typography>
             <Typography color={medium}>

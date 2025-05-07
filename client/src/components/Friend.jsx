@@ -1,5 +1,5 @@
 import { PersonAddOutlined, PersonRemoveOutlined } from "@mui/icons-material";
-import { Box, IconButton, Typography, useTheme } from "@mui/material";
+import { Box,IconButton, Typography, useTheme } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setFriends } from "../state";
@@ -38,7 +38,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   };
 
   return (
-    <FlexBetween>
+    <FlexBetween mb='1rem'>
       <FlexBetween gap="1rem">
         <UserImage image={userPicturePath} size="55px" />
         <Box
@@ -60,6 +60,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
           >
             {name}
           </Typography>
+         
           <Typography color={medium} fontSize="0.75rem">
             {subtitle}
           </Typography>
@@ -77,7 +78,9 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
         )}
       </IconButton>
       ) }
+      
     </FlexBetween>
+    
   );
 };
 

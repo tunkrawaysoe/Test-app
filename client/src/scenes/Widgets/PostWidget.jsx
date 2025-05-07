@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import WidgetWrapper from '../../components/WidgetWrapper'
-import { Box,Divider,Typography,IconButton,useTheme } from '@mui/material'
+import { Box,Typography,IconButton,useTheme } from '@mui/material'
 import FlexBetween from '../../components/FlexBetween'
 import Friend from '../../components/Friend'
 import { setPost } from '../../state'
@@ -46,8 +46,9 @@ const PostWidget = ({
              
             }
             return (
-            <WidgetWrapper m='2rem 0'>
+            <WidgetWrapper mb='1rem'>
               <Friend friendId = {postUserId} name={name} subtitle={location} userPicturePath={userPicturePath}/>
+              
               <Typography color={main} m='2rem 0'>
                 {description}
               </Typography>

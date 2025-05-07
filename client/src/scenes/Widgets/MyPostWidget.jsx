@@ -46,11 +46,6 @@ const MyPostWidget = ({ picturePath, userId }) => {
         formData.append('picture', image);
         formData.append('picturePath', image.name);
       }
-      console.log("Payload:", {
-        userId,
-        post,
-        image,
-      });
       
      
 
@@ -72,8 +67,8 @@ const MyPostWidget = ({ picturePath, userId }) => {
   };
 
   return (
-    <WidgetWrapper>
-      <FlexBetween gap="1.5rem">
+    <WidgetWrapper mb='2rem'>
+      <FlexBetween gap="1.5rem" >
         <UserImage image={picturePath} />
         <InputBase
           placeholder="What's on your mind..."
