@@ -10,8 +10,6 @@ const FriendListWidget = ({ userId }) => {
   const token = useSelector((state) => state.token);
   const {friends} = useSelector((state)=>state.user)
   
-  
-
   const getUserFriends = async () => {
     const response = await fetch(
       `http://localhost:3000/users/${userId}/friends`,
