@@ -162,10 +162,13 @@ const MyPostWidget = ({ picturePath, userId }) => {
         <Button
           disabled={!post}
           onClick={createPost}
+          
           sx={{
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
-            borderRadius: '3rem',
+            borderRadius: '1rem',
+            fontSize :'0.9rem',
+            fontWeight: 600
           }}
         >
           POST
