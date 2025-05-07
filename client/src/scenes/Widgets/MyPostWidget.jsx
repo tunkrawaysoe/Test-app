@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import WidgetWrapper from '../../components/WidgetWrapper';
 import FlexBetween from '../../components/FlexBetween';
 import UserImage from '../../components/UserImage';
-import Dropzone from 'react-dropzone'; // Assuming you're using this package
+import Dropzone from 'react-dropzone';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -11,7 +11,6 @@ import {
   ImageOutlined,
   MicOutlined,
   MoreHorizOutlined,
-  Description,
 } from '@mui/icons-material';
 import {
   Box,
@@ -22,14 +21,19 @@ import {
   Button,
   IconButton,
   useMediaQuery,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPosts } from '../../state';
+import { useNavigate } from 'react-router-dom'; // Ensure this is imported
 
 const MyPostWidget = ({ picturePath, userId }) => {
+  const navigate = useNavigate(); // This should be defined here
   const [post, setPost] = useState('');
   const [image, setImage] = useState(null);
   const [isImage, setIsImage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { palette } = useTheme();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.token);
@@ -46,8 +50,8 @@ const MyPostWidget = ({ picturePath, userId }) => {
         formData.append('picture', image);
         formData.append('picturePath', image.name);
       }
-      
-     const response = await fetch(`http://localhost:3000/posts`, {
+
+      const response = await fetch(`http://localhost:3000/posts`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -59,15 +63,38 @@ const MyPostWidget = ({ picturePath, userId }) => {
       dispatch(setPosts({ posts: data }));
       setImage(null);
       setPost('');
+      setErrorMessage(''); // Clear any previous error on successful post creation
     } catch (error) {
-      console.error('Post creation error:', error);
+      setErrorMessage(error.message || 'Post creation error.');
     }
   };
 
   return (
     <WidgetWrapper mb='2rem'>
-      <FlexBetween gap="1.5rem" >
-        <UserImage image={picturePath} />
+      {/* Snackbar for errors */}
+      <Snackbar
+        open={!!errorMessage}
+        autoHideDuration={6000}
+        onClose={() => setErrorMessage('')} // Close Snackbar after it disappears
+      >
+        <Alert severity="error">{errorMessage}</Alert>
+      </Snackbar>
+
+      <FlexBetween gap="1.5rem">
+        {/* Only navigate when image is clicked */}
+
+        <Box onClick={() => navigate(`/profile/${userId}`)} 
+          sx={{
+            "&:hover": {
+              color: palette.primary.light,
+              cursor: "pointer",
+            },
+          }}>
+        <UserImage
+          image={picturePath}
+           // Navigate to the user's profile
+        />
+        </Box>
         <InputBase
           placeholder="What's on your mind..."
           onChange={(e) => setPost(e.target.value)}
@@ -123,15 +150,10 @@ const MyPostWidget = ({ picturePath, userId }) => {
       <FlexBetween>
         <FlexBetween gap="0.25rem" onClick={() => setIsImage(!isImage)}>
           <ImageOutlined sx={{ color: mediumMain }} />
-          <Typography
-            color={mediumMain}
-            sx={{ '&:hover': { cursor: 'pointer', color: medium } }}
-          >
-            Image
-          </Typography>
+          <Typography color={mediumMain}>Image</Typography>
         </FlexBetween>
 
-        {isNonMobileScreens ? (
+        {isNonMobileScreens && (
           <>
             <FlexBetween gap="0.25rem">
               <GifBoxOutlined sx={{ color: mediumMain }} />
@@ -146,22 +168,17 @@ const MyPostWidget = ({ picturePath, userId }) => {
               <Typography color={mediumMain}>Audio</Typography>
             </FlexBetween>
           </>
-        ) : (
-          <FlexBetween gap="0.25rem">
-            <MoreHorizOutlined sx={{ color: mediumMain }} />
-          </FlexBetween>
         )}
 
         <Button
           disabled={!post}
           onClick={createPost}
-          
           sx={{
             color: palette.background.alt,
             backgroundColor: palette.primary.main,
             borderRadius: '1rem',
-            fontSize :'0.9rem',
-            fontWeight: 600
+            fontSize: '0.9rem',
+            fontWeight: 600,
           }}
         >
           POST

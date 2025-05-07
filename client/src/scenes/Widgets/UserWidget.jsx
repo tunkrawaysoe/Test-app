@@ -76,7 +76,9 @@ const UserWidget = ({ userId, picturePath }) => {
       {/* First Row */}
       <FlexBetween gap="1rem" pb="1.1rem">
         <FlexBetween gap="1rem" onClick={()=>navigate(`/profile/${userId}`)}>
-          <UserImage image= {picturePath}  />
+          <Box sx={{ '&:hover': { cursor: 'pointer' }}}>
+            <UserImage image= {picturePath}  />
+          </Box>
           <Box>
             <Typography fontWeight="500" variant="h6" color={dark} sx={{
                 "&:hover": {

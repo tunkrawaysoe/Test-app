@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomePage from './scenes/HomePage';
 import LoginPage from './scenes/Login';
 import ProfilePage from './scenes/ProfilePage';
-import RegisterPage from './scenes/RegisterPage';
 import { ThemeProvider, CssBaseline, createTheme } from '@mui/material'; 
 import { useSelector } from 'react-redux';
 import { themeSettings } from './theme';
@@ -21,7 +20,6 @@ function App() {
             <Route path="/" element={<LoginPage />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/profile/:userId" element={<ProfilePage />} />
-            <Route path="/register" element={<RegisterPage />} />
           </Routes>
         </ThemeProvider>
       </Router>

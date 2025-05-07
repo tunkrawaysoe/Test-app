@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import WidgetWrapper from '../../components/WidgetWrapper'
-import { Box,Typography,IconButton,useTheme } from '@mui/material'
+import { Box,Typography,IconButton,useTheme, Dialog, DialogContent, DialogActions } from '@mui/material'
 import FlexBetween from '../../components/FlexBetween'
 import Friend from '../../components/Friend'
 import { setPost } from '../../state'
@@ -18,6 +18,8 @@ const PostWidget = ({
     comments,
           }) => {
           const [isComment,setIsComment] = useState(false);
+          const [isModal,setIsModal] = useState(false);
+          const [imageUrl,setImageUrl] = useState('');
           const dispatch = useDispatch();
           const token = useSelector((state)=>state.token);
           const loginUserId = useSelector((state)=>state.user._id);
@@ -45,7 +47,21 @@ const PostWidget = ({
               dispatch(setPost({post : data}))
              
             }
-            return (
+
+            const handleImageClick = (imageUrl) => {
+              setImageUrl(imageUrl);
+              setIsModal(true);
+              console.log('YOu click the button')
+           }
+
+            const handleCloseModal = () => {
+              setIsModal(false);
+              setImageUrl('')
+
+            }
+
+
+          return (
             <WidgetWrapper mb='1rem'>
               <Friend friendId = {postUserId} name={name} subtitle={location} userPicturePath={userPicturePath}/>
               
@@ -58,9 +74,11 @@ const PostWidget = ({
                   height='auto'
                   alt='post'
                   style={{
-                    borderRadius:'0.5rem',                    
+                    borderRadius:'0.5rem',
+                    cursor : 'pointer'
                   }}
                   src={`http://localhost:3000/assets/${picturePath}`}
+                  onClick={()=>handleImageClick(`http://localhost:3000/assets/${picturePath}`)}
                 />
               )}
               <FlexBetween   mt="0.25rem">
@@ -92,21 +110,37 @@ const PostWidget = ({
                   <Box mt="0.5rem">
                     {comments?.map((comment, i) => (
                       <Box key={`${name}-${i}`}>
-                        <Divider />
+                        
                         <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
                           {comment} 
                         </Typography>
                       </Box>
                     ))}
-                    <Divider />
+                    
                   </Box>
                 )}
 
-             
-            
+              {/* Image Modal*/}
+              {/* Image Modal */}
+      <Dialog open={isModal} onClose={handleCloseModal} maxWidth="md" fullWidth>
+        {/* Dialog Content (Image) */}
+        <DialogContent sx={{ p: 0, backgroundColor: 'rgba(0, 0, 0, 0.9)' }}>
+          <Box
+            component="img"
+            src={imageUrl}
+            alt="Post image"
+            sx={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'contain',
+              
+            }}
+          />
+        </DialogContent>
+      </Dialog>
 
-            </WidgetWrapper>
-            )
-          }
+         </WidgetWrapper>
+         
+            )}
 
 export default PostWidget

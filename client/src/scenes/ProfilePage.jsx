@@ -1,5 +1,5 @@
 import React, { use, useEffect, useState } from 'react'
-import WidgetWrapper from '../components/WidgetWrapper'
+
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box } from '@mui/material'
