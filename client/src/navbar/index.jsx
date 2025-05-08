@@ -1,6 +1,25 @@
 import React, { useState } from 'react';
-import { Box, IconButton, Typography, InputBase, useTheme, useMediaQuery, FormControl, Select, MenuItem } from '@mui/material';
-import { Search, DarkMode, LightMode, Message, Notifications, Help, Menu as MenuIcon, Close } from '@mui/icons-material';
+import {
+  Box,
+  IconButton,
+  Typography,
+  InputBase,
+  useTheme,
+  useMediaQuery,
+  FormControl,
+  Select,
+  MenuItem,
+} from '@mui/material';
+import {
+  Search,
+  DarkMode,
+  LightMode,
+  Message,
+  Notifications,
+  Help,
+  Menu as MenuIcon,
+  Close,
+} from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLogout, setMode } from '../state';
 import { useNavigate } from 'react-router-dom';
@@ -11,26 +30,41 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user);
-  const isNonMobileScreen = useMediaQuery("(min-width: 1000px)");
+  const isNonMobileScreen = useMediaQuery('(min-width: 1000px)');
   const theme = useTheme();
   const neutralLight = theme.palette.neutral.light;
   const primaryLight = theme.palette.primary.light;
   const dark = theme.palette.neutral.dark;
   const alt = theme.palette.background.alt;
-  const fullName = user ? `${user.firstName} ${user.lastName}` : "Guest";
+  const fullName = user ? `${user.firstName} ${user.lastName}` : 'Guest';
 
+  const handleLogout = () => {
+    dispatch(setLogout());
+    navigate('/');
+  };
 
   return (
-    <FlexBetween padding='1rem 6%' backgroundColor={alt}>
-      {/* Left side */}
-      <FlexBetween gap='1.75rem'>
+    <FlexBetween
+    sx={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      width: '100%',
+      zIndex: 1300, // higher than most components (like drawers, modals, etc.)
+      backgroundColor: alt,
+      padding: '1rem 6%',
+    }}
+  >
+  
+      {/* Left Side */}
+      <FlexBetween gap="1.75rem">
         <Typography
-          fontWeight='bold'
-          fontSize='clamp(1rem, 2rem, 2.25rem)'
-          color='secondary'
+          fontWeight="bold"
+          fontSize="clamp(1rem, 2rem, 2.25rem)"
+          color="secondary"
           onClick={() => navigate('/home')}
           sx={{
-            ":hover": {
+            ':hover': {
               color: primaryLight,
               cursor: 'pointer',
             },
@@ -41,8 +75,13 @@ const NavBar = () => {
 
         {/* Search Bar */}
         {isNonMobileScreen && (
-          <FlexBetween backgroundColor={neutralLight} borderRadius='9px' gap='0.1rem 3rem' padding='0.1rem 1rem'>
-            <InputBase placeholder='Search...' />
+          <FlexBetween
+            backgroundColor={neutralLight}
+            borderRadius="9px"
+            gap="0.1rem 3rem"
+            padding="0.1rem 1rem"
+          >
+            <InputBase placeholder="Search..." />
             <IconButton>
               <Search />
             </IconButton>
@@ -50,10 +89,9 @@ const NavBar = () => {
         )}
       </FlexBetween>
 
-      {/* Right side */}
+      {/* Right Side */}
       {isNonMobileScreen ? (
-        <FlexBetween gap='2rem'>
-          {/* Dark / Light Toggle */}
+        <FlexBetween gap="2rem">
           <IconButton onClick={() => dispatch(setMode())}>
             {theme.palette.mode === 'dark' ? (
               <DarkMode sx={{ fontSize: '25px' }} />
@@ -62,13 +100,11 @@ const NavBar = () => {
             )}
           </IconButton>
 
-          {/* Other Icons */}
           <Message sx={{ fontSize: '25px' }} />
           <Notifications sx={{ fontSize: '25px' }} />
           <Help sx={{ fontSize: '25px' }} />
 
-          {/* User Menu */}
-          <FormControl variant='standard' value={fullName}>
+          <FormControl variant="standard" value={fullName}>
             <Select
               value={fullName}
               sx={{
@@ -82,7 +118,7 @@ const NavBar = () => {
               <MenuItem value={fullName}>
                 <Typography>{fullName}</Typography>
               </MenuItem>
-              <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={handleLogout}>Log Out</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -95,25 +131,27 @@ const NavBar = () => {
       {/* Mobile Menu */}
       {!isNonMobileScreen && isMobileMenuToggled && (
         <Box
-          position='fixed'
-          right='0'
-          bottom='0'
-          height='100%'
-          zIndex='10'
-          maxWidth='500px'
-          minWidth='300px'
+          position="fixed"
+          right="0"
+          bottom="0"
+          height="100%"
+          zIndex="10"
+          maxWidth="500px"
+          minWidth="300px"
           backgroundColor={alt}
         >
-          {/* Close Button */}
-          <Box display='flex' justifyContent='flex-end' p='1rem'>
+          <Box display="flex" justifyContent="flex-end" p="1rem">
             <IconButton onClick={() => setMobileMenuToggled(false)}>
               <Close />
             </IconButton>
           </Box>
 
-          {/* Menu Items */}
-          <FlexBetween flexDirection='column' gap='2rem' justifyContent='center' padding='2rem'>
-            {/* Dark/Light Toggle */}
+          <FlexBetween
+            flexDirection="column"
+            gap="2rem"
+            justifyContent="center"
+            padding="2rem"
+          >
             <IconButton onClick={() => dispatch(setMode())}>
               {theme.palette.mode === 'dark' ? (
                 <DarkMode sx={{ fontSize: '25px' }} />
@@ -122,13 +160,11 @@ const NavBar = () => {
               )}
             </IconButton>
 
-            {/* Other Icons */}
             <Message sx={{ fontSize: '25px' }} />
             <Notifications sx={{ fontSize: '25px' }} />
             <Help sx={{ fontSize: '25px' }} />
 
-            {/* User Menu */}
-            <FormControl variant='standard' value={fullName}>
+            <FormControl variant="standard" value={fullName}>
               <Select
                 value={fullName}
                 sx={{
@@ -142,7 +178,7 @@ const NavBar = () => {
                 <MenuItem value={fullName}>
                   <Typography>{fullName}</Typography>
                 </MenuItem>
-                <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+                <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Select>
             </FormControl>
           </FlexBetween>

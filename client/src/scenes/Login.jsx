@@ -8,10 +8,9 @@ const HomePage = () => {
 
   return (    
     <Box>
-      <NavBar /> {/* Optional: re-add this if needed */}
-
-      <Box width="100%" textAlign="center" padding="1rem 5%">
-        <Typography fontSize={30} fontWeight="bold" color="primary">
+      <Box width="100%" textAlign="center">
+        <Typography fontSize={30} fontWeight="bold" color="primary" backgroundColor={theme.palette.background.alt}
+        p="1rem 6%">
           Social Hub
         </Typography>
       </Box>

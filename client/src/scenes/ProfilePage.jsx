@@ -3,7 +3,6 @@ import React, { use, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { Box } from '@mui/material'
-import NavBar from '../navbar'
 import FriendListWidget from './Widgets/FriendListWidget'
 import UserWidget from './Widgets/UserWidget'
 import PostsWidget from './Widgets/PostsWidget'
@@ -37,9 +36,8 @@ const ProfilePage = () => {
   
     return (
       <Box>
-        <NavBar />
-        <Box display='flex' p='2rem 5%' gap='1rem'>
-          <Box flexBasis='30%'>
+        <Box display='flex' justifyContent='center' p='2rem 5%' gap='1rem'>
+          <Box flexBasis='20%'>
             {user && (
               <>
                 <UserWidget userId={userId} picturePath={user.picturePath} />

@@ -1,5 +1,4 @@
 import React from 'react';
-import NavBar from '../navbar/index';
 import { Box, useMediaQuery } from '@mui/material';
 import UserWidget from './Widgets/UserWidget';
 import { useSelector } from 'react-redux';
@@ -14,8 +13,7 @@ const HomePage = () => {
   
   
   return (    
-    <Box>
-      <NavBar />
+    <Box >
       <Box
         width='100%' 
         padding='2rem 6%' 
