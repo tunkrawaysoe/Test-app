@@ -24,7 +24,7 @@ const FriendListWidget = ({ userId }) => {
 
   useEffect(() => {
     getUserFriends();
-  }, []); // consider adding [userId] as a dependency if this can change
+  }, []); 
   console.log(userId)
 
   return (
